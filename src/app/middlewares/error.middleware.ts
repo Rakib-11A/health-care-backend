@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
 import { envVars } from "../config/env";
-// import { config } from "../config/env";
 
 export const errorHandler = (
     err: any,
     req: Request,
     res: Response,
-    _next: NextFunction
+    next: NextFunction
 ) => {
-    console.error("X Error: ", err);
+    if(envVars.NODE_ENV === 'development'){
+        console.log("Error from Global Error Handler ", err)
+    }
 
-    let statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-    let message = err.message || 'Internal Server Error';
+    let statusCode : number = res.statusCode !== 200 ? res.statusCode : 500;
+    let message : string = err.message || 'Internal Server Error';
 
     // Handle Prisma Errors
     if(err.code === 'P2025') {
@@ -32,6 +34,6 @@ export const errorHandler = (
     res.status(statusCode).json({
         success: false,
         message: message,
-        ...(envVars.NODE_ENV=== 'development' && { error: err})
+        ...(envVars.NODE_ENV === 'development' && { error: err})
     })
 }

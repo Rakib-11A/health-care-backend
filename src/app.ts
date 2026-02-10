@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express"
 import { prisma } from "./app/lib/prisma";
 import { IndexRoutes } from "./app/routes";
 import { errorHandler } from "./app/middlewares/error.middleware";
+import { notFound } from "./app/middlewares/notFound";
 
 const app: Application = express();
 
@@ -30,5 +31,8 @@ app.get('/', async (req: Request, res: Response) => {
 
 // Error Handler
 app.use(errorHandler);
+
+// Not Found Route Handler
+app.use(notFound)
 
 export default app;
