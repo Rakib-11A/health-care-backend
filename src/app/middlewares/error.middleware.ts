@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
-import { config } from "../config/env";
+import { envVars } from "../config/env";
+// import { config } from "../config/env";
 
 export const errorHandler = (
     err: any,
@@ -31,6 +32,6 @@ export const errorHandler = (
     res.status(statusCode).json({
         success: false,
         message: message,
-        ...(config.nodeEnv === 'development' && { error: err})
+        ...(envVars.PORT === 'development' && { error: err})
     })
 }
