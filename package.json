@@ -10,7 +10,7 @@
     "build": "tsc",
     "dev": "tsx watch src/server.ts",
     "lint": "eslint \"src/**/*\"",
-    "migrate": "dlx prisma migrate dev",
+    "migrate": "prisma migrate dev",
     "generate": "prisma generate",
     "studio": "prisma studio",
     "push": "prisma push",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
+    "better-auth": "^1.4.18",
     "express": "^5.2.1",
     "pg": "^8.18.0"
   },

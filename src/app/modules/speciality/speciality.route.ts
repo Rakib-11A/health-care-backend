@@ -5,6 +5,7 @@ const router = Router();
 
 router.post('/', specialityController.createSpeciality);
 router.get('/', specialityController.getAllSpecialities);
+router.patch('/:id', specialityController.updateSpeciality);
 router.delete('/:id', specialityController.deleteSpeciality);
 
 export const SpecialityRoutes = router;
