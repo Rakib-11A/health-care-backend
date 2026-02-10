@@ -32,6 +32,6 @@ export const errorHandler = (
     res.status(statusCode).json({
         success: false,
         message: message,
-        ...(envVars.PORT === 'development' && { error: err})
+        ...(envVars.NODE_ENV=== 'development' && { error: err})
     })
 }

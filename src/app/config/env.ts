@@ -1,8 +1,9 @@
-// Way -1
+// Way - 1
 import dotenv from 'dotenv';
 // import path from 'node:path';
 
 // dotenv.config({path: path.join(process.cwd(), '.env')});
+
 
 // export const config = {
 //     port: process.env.PORT,
@@ -10,10 +11,12 @@ import dotenv from 'dotenv';
 //     betterAuthUrl: process.env.BETTER_AUTH_URL as string,
 // }
 
+// Way - 2
+
 dotenv.config();
 
 interface EnvConfig {
-    NODE_ENV: string;
+    NODE_ENV: string,
     PORT: string;
     DATABASE_URL: string;
     BETTER_AUTH_SECRET: string;
@@ -31,10 +34,9 @@ const loadEnvVariables = (): EnvConfig => {
 
     requireEnvVariables.forEach((variable) => {
         if(!process.env[variable]){
-            throw new Error(`Environment variable ${variable} is required but not set.`)
+            throw new Error(`Environment variable ${variable} is required but not set in .env file.`);
         }
     })
-
     return {
         NODE_ENV: process.env.NODE_ENV as string,
         PORT: process.env.PORT as string,
