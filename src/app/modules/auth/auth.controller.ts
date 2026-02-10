@@ -5,7 +5,7 @@ import { sendResponse } from "../../utils/sendResponse";
 
 const registerPatient = asynchandler( async(req: Request, res: Response) => {
     const payload = req.body;
-    console.log(payload)
+    // console.log(payload)
     const result = await authService.registerPatient(payload);
     sendResponse(res, {
         httpStatusCode: 200,
