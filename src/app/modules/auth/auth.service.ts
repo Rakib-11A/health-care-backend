@@ -43,6 +43,8 @@ const loginUser = async(payload: ILoginUser) => {
         throw new Error("User is deleted");
     }
 
+    
+
     return data;
 }
 
