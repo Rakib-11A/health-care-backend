@@ -1,4 +1,4 @@
-model speciality {
+model Speciality {
     id String @id @default(uuid(7))
 
     title       String  @unique @db.VarChar(255)
@@ -10,6 +10,9 @@ model speciality {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    // Relation
+    doctorSpecialities DoctorSpaciality[]
 
     @@index([isDeleted], name: "idx_speciality_isDeleted")
     @@index([title], name: "idx_speciality_title")

@@ -55,8 +55,10 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  Doctor: 'Doctor',
+  DoctorSpaciality: 'DoctorSpaciality',
   Patient: 'Patient',
-  speciality: 'speciality'
+  Speciality: 'Speciality'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -136,6 +138,42 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const DoctorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  profilePhoto: 'profilePhoto',
+  contactNumber: 'contactNumber',
+  address: 'address',
+  registrationNumber: 'registrationNumber',
+  experience: 'experience',
+  gender: 'gender',
+  appoinmentFee: 'appoinmentFee',
+  qualification: 'qualification',
+  currentWorkingPlace: 'currentWorkingPlace',
+  designation: 'designation',
+  averageRating: 'averageRating',
+  isDeleted: 'isDeleted',
+  DeletedAt: 'DeletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
+
+
+export const DoctorSpacialityScalarFieldEnum = {
+  id: 'id',
+  doctorId: 'doctorId',
+  specialityId: 'specialityId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DoctorSpacialityScalarFieldEnum = (typeof DoctorSpacialityScalarFieldEnum)[keyof typeof DoctorSpacialityScalarFieldEnum]
 
 
 export const PatientScalarFieldEnum = {
