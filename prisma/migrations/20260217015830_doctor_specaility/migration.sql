@@ -17,8 +17,8 @@ CREATE TABLE "doctors" (
     "currentWorkingPlace" TEXT NOT NULL,
     "designation" TEXT NOT NULL,
     "averageRating" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
-    "isDeleted" BOOLEAN NOT NULL,
-    "DeletedAt" TIMESTAMP(3) NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "DeletedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
@@ -27,14 +27,14 @@ CREATE TABLE "doctors" (
 );
 
 -- CreateTable
-CREATE TABLE "doctorSpeciality" (
+CREATE TABLE "doctor_Specialities" (
     "id" TEXT NOT NULL,
     "doctorId" TEXT NOT NULL,
     "specialityId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "doctorSpeciality_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "doctor_Specialities_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -50,19 +50,19 @@ CREATE INDEX "idx_doctor_email" ON "doctors"("email");
 CREATE INDEX "idx_doctor_isDeleted" ON "doctors"("isDeleted");
 
 -- CreateIndex
-CREATE INDEX "idx_doctor_speciality_doctorId" ON "doctorSpeciality"("doctorId");
+CREATE INDEX "idx_doctor_speciality_doctorId" ON "doctor_Specialities"("doctorId");
 
 -- CreateIndex
-CREATE INDEX "idx_doctor_speciality_specialityId" ON "doctorSpeciality"("specialityId");
+CREATE INDEX "idx_doctor_speciality_specialityId" ON "doctor_Specialities"("specialityId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "doctorSpeciality_doctorId_specialityId_key" ON "doctorSpeciality"("doctorId", "specialityId");
+CREATE UNIQUE INDEX "doctor_Specialities_doctorId_specialityId_key" ON "doctor_Specialities"("doctorId", "specialityId");
 
 -- AddForeignKey
 ALTER TABLE "doctors" ADD CONSTRAINT "doctors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "doctorSpeciality" ADD CONSTRAINT "doctorSpeciality_doctorId_fkey" FOREIGN KEY ("doctorId") REFERENCES "doctors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "doctor_Specialities" ADD CONSTRAINT "doctor_Specialities_doctorId_fkey" FOREIGN KEY ("doctorId") REFERENCES "doctors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "doctorSpeciality" ADD CONSTRAINT "doctorSpeciality_specialityId_fkey" FOREIGN KEY ("specialityId") REFERENCES "specialities"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "doctor_Specialities" ADD CONSTRAINT "doctor_Specialities_specialityId_fkey" FOREIGN KEY ("specialityId") REFERENCES "specialities"("id") ON DELETE CASCADE ON UPDATE CASCADE;

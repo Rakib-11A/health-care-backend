@@ -25,11 +25,11 @@ export interface ICreateDoctorPayload {
     doctor: {
         name: string;
         email: string;
-        profilePhoto?: string;
-        contactNumber?: string;
-        address?: string;
+        profilePhoto: string;
+        contactNumber: string;
+        address: string;
         registrationNumber: string;
-        experience?: number
+        experience: number;
         gender: Gender;
         appoinmentFee: number;
         qualification: string;
