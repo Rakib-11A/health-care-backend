@@ -1,5 +1,7 @@
 // Way - 1
 import dotenv from 'dotenv';
+import AppError from '../errorHelpers/AppError';
+import status from 'http-status';
 // import path from 'node:path';
 
 // dotenv.config({path: path.join(process.cwd(), '.env')});
@@ -21,6 +23,12 @@ interface EnvConfig {
     DATABASE_URL: string;
     BETTER_AUTH_SECRET: string;
     BETTER_AUTH_URL: string;
+    ACCESS_TOKEN_SECRET: string;
+    REFRESH_TOKEN_SCERET: string;
+    ACCESS_TOEKN_EXPIRES_IN: string;
+    REFRESH_TOKEN_EXPIRES_IN: string;
+    BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: string;
+    BETTER_AUTH_SESSION_TOEKN_UPDATE_AGE: string;
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -29,12 +37,19 @@ const loadEnvVariables = (): EnvConfig => {
         'PORT',
         'DATABASE_URL',
         'BETTER_AUTH_SECRET',
-        'BETTER_AUTH_URL'
+        'BETTER_AUTH_URL',
+        'ACCESS_TOKEN_SECRET',
+        'REFRESH_TOKEN_SCERET',
+        'ACCESS_TOEKN_EXPIRES_IN',
+        'REFRESH_TOKEN_EXPIRES_IN',
+        'BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN',
+        'BETTER_AUTH_SESSION_TOEKN_UPDATE_AGE'
     ]
 
     requireEnvVariables.forEach((variable) => {
         if(!process.env[variable]){
-            throw new Error(`Environment variable ${variable} is required but not set in .env file.`);
+            // throw new Error(`Environment variable ${variable} is required but not set in .env file.`);
+            throw new AppError(status.INTERNAL_SERVER_ERROR, `Eenvironment variable ${variable} is required but not set in .env file.`);
         }
     })
     return {
@@ -43,6 +58,12 @@ const loadEnvVariables = (): EnvConfig => {
         DATABASE_URL: process.env.DATABASE_URL as string,
         BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET as string,
         BETTER_AUTH_URL: process.env.BETTER_AUTH_URL as string,
+        ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET as string,
+        REFRESH_TOKEN_SCERET: process.env.REFRESH_TOKEN_SCERET as string,
+        ACCESS_TOEKN_EXPIRES_IN: process.env.ACCESS_TOEKN_EXPIRES_IN as string,
+        REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN as string,
+        BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: process.env.BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN as string,
+        BETTER_AUTH_SESSION_TOEKN_UPDATE_AGE: process.env.BETTER_AUTH_SESSION_TOEKN_UPDATE_AGE as string
     }
 }
 
