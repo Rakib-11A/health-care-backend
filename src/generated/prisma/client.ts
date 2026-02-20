@@ -60,7 +60,22 @@ export type Account = Prisma.AccountModel
  */
 export type Verification = Prisma.VerificationModel
 /**
- * Model speciality
+ * Model Doctor
  * 
  */
-export type speciality = Prisma.specialityModel
+export type Doctor = Prisma.DoctorModel
+/**
+ * Model DoctorSpaciality
+ * 
+ */
+export type DoctorSpaciality = Prisma.DoctorSpacialityModel
+/**
+ * Model Patient
+ * 
+ */
+export type Patient = Prisma.PatientModel
+/**
+ * Model Speciality
+ * 
+ */
+export type Speciality = Prisma.SpecialityModel
