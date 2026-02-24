@@ -1,0 +1,13 @@
+model Schedule {
+    id        String   @id @default(uuid())
+    startData DateTime
+    endDate   DateTime
+    startTime String
+    endTime   String
+    createdAt DateTime @default(now())
+    updatedat DateTime @updatedAt
+
+    doctorScheduls DoctorSchedules[]
+
+    @@map("schedules")
+}

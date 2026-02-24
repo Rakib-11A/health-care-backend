@@ -14,16 +14,36 @@ model Doctor {
     designation         String
     averageRating       Float     @default(0.0)
     isDeleted           Boolean   @default(false)
-    DeletedAt           DateTime?
+    deletedAt           DateTime?
     createdAt           DateTime  @default(now())
     updatedAt           DateTime  @updatedAt
 
     // Relations
-    specialities DoctorSpaciality[]
-    userId       String             @unique
-    user         User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    specialities    DoctorSpaciality[]
+    appoinment      Appoinment[]
+    review          Review[]
+    medicalReport   MedicalReport[]
+    userId          String             @unique
+    user            User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    doctorSchedules DoctorSchedules[]
 
     @@index([email], name: "idx_doctor_email")
     @@index([isDeleted], name: "idx_doctor_isDeleted")
     @@map("doctors")
+}
+
+model DoctorSchedules {
+    id         String   @id @default(uuid())
+    doctorId   String
+    scheduleId String
+    isBooked   Boolean
+    createdAt  DateTime
+    updatedAt  DateTime @updatedAt
+
+    appoinment Appoinment?
+    doctor     Doctor      @relation(fields: [doctorId], references: [id])
+    schedule   Schedule    @relation(fields: [scheduleId], references: [id])
+
+    @@unique([doctorId, scheduleId])
+    @@map("doctor_schedules")
 }
