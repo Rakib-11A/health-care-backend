@@ -30,3 +30,28 @@ export const createDoctorSchema = z.object({
     }),
     specialities: z.array(z.uuid(), "Specialities must be an array of strings").min(1, "At least one speciality is required")
 });
+
+export const createAdminValidationSchema = z.object({
+    body: z.object({
+        password: z.string().min(6, "Password must be at least 6 characters"),
+        admin: z.object({
+            name: z.string("Name is required and must be string").min(5, "Name must be at least 5 character").max(30, "Name must be at most 30 characters"),
+            email: z.email("Invalid email format"),
+            profilePhoto: z.url("Invalid URL format").optional(),
+            contactNumber: z.string().min(1, "Contact number is required"),
+        }),
+    }),
+});
+
+export const createSuperAdminValidationSchema = z.object({
+    body: z.object({
+        password: z.string().min(6, "Password must be at least 6 characters."),
+        superAdmin: z.object({
+            name: z.string("Name is required and must be string.").min(5, "Name must be at least 5 character").max(30, "Name must be at most 30 characters."),
+            email: z.email("Invalid email formate"),
+            profilePhoto: z.url("Invalid URL format").optional(),
+            contactNumber: z.string().min(1, "Contact number is required."),
+        }),
+    }),
+});
+

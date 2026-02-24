@@ -15,7 +15,30 @@ const createDoctor = asynchandler(async(req: Request, res: Response) => {
     })
 })
 
+const createAdmin = asynchandler( async(req: Request, res: Response) => {
+    const payload = req.body;
+    const result = await userService.createAdmin(payload);
+    sendResponse(res, {
+        httpStatusCode: status.CREATED,
+        success: true,
+        message: "Admin created successfully",
+        data: result
+    });
+});
+
+const createSuperAdmin = asynchandler(async(req: Request, res: Response) => {
+    const payload = req.body;
+    const result = await userService.createSuperAdmin(payload);
+    sendResponse(res, {
+        httpStatusCode: status.CREATED,
+        success: true,
+        message: "Super Admin created successfully",
+        data: result,
+    })
+})
 
 export const userController = {
     createDoctor,
+    createAdmin,
+    createSuperAdmin
 }
