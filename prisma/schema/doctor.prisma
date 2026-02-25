@@ -19,13 +19,15 @@ model Doctor {
     updatedAt           DateTime  @updatedAt
 
     // Relations
+    userId String @unique
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
     specialities    DoctorSpaciality[]
-    appoinment      Appoinment[]
-    review          Review[]
-    medicalReport   MedicalReport[]
-    userId          String             @unique
-    user            User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    appoinments     Appoinment[]
+    prescriptions   Prescription[]
+    reviews         Review[]
     doctorSchedules DoctorSchedules[]
+    medicalReports  MedicalReport[]
 
     @@index([email], name: "idx_doctor_email")
     @@index([isDeleted], name: "idx_doctor_isDeleted")
@@ -33,17 +35,19 @@ model Doctor {
 }
 
 model DoctorSchedules {
-    id         String   @id @default(uuid())
-    doctorId   String
+    // id         String   @id @default(uuid())
+    isBooked  Boolean  @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    doctorId String
+    doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
     scheduleId String
-    isBooked   Boolean
-    createdAt  DateTime
-    updatedAt  DateTime @updatedAt
+    schedule   Schedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    appoinment Appoinment?
-    doctor     Doctor      @relation(fields: [doctorId], references: [id])
-    schedule   Schedule    @relation(fields: [scheduleId], references: [id])
-
-    @@unique([doctorId, scheduleId])
+    @@id([doctorId, scheduleId])
+    @@index([doctorId])
+    @@index([scheduleId])
     @@map("doctor_schedules")
 }
