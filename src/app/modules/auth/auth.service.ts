@@ -8,17 +8,9 @@ import { IRequestUser } from "../../interfaces/requestUser.interface";
 import { jwtUtils } from "../../utils/jwt";
 import { envVars } from "../../config/env";
 import { JWTPayload } from "better-auth";
+import { IChangePasswordPayload, ILoginUser, IRegisterPatientPayload } from "./auth.interface";
 
-interface IRegisterPatientPayload {
-    name: string,
-    email: string;
-    password: string
-}
 
-interface ILoginUser {
-    email: string;
-    password: string;
-}
 const registerPatient = async (payload: IRegisterPatientPayload) => {
     const { name, email, password } = payload;
     const data = await auth.api.signUpEmail({
@@ -222,9 +214,179 @@ const getNewToken = async (refreshToken : string, sessionToken : string) => {
     }
 }
 
+const changePassword = async(payload : IChangePasswordPayload, sessionToken : string) => {
+    const session = await auth.api.getSession({
+        headers: new Headers({
+            Authorization : `Bearer ${sessionToken}`
+        })
+    })
+    if(!session) {
+        throw new AppError(status.UNAUTHORIZED,"Invalid session token");
+    }
+
+    const {currentPassword, newPassword} = payload;
+
+    const result = await auth.api.changePassword({
+        body: {
+            currentPassword,
+            newPassword,
+            revokeOtherSessions: true
+        },
+        headers: new Headers({
+            Authorization : `Bearer ${sessionToken}`
+        })
+    })
+
+    if(session.user.needPasswordChange){
+        await prisma.user.update({
+            where: {
+                id: session.user.id
+            },
+            data: {
+                needPasswordChange: false
+            }
+        })
+    }
+
+    const accessToken = tokenUtils.getAccessToken({
+        userId: session.user.id,
+        role: session.user.role,
+        name: session.user.name,
+        email: session.user.email,
+        status: session.user.status,
+        isDeleted: session.user.isDeleted,
+        emailVerified: session.user.emailVerified,
+    });
+
+    const refreshToken = tokenUtils.getRefreshToken({
+        userId: session.user.id,
+        role: session.user.role,
+        name: session.user.name,
+        email: session.user.email,
+        status: session.user.email,
+        isDeleted: session.user.isDeleted,
+        emailVerified: session.user.emailVerified,
+    });
+
+    return {
+        ...result,
+        accessToken,
+        refreshToken
+    }
+}
+
+const logoutUser = async(sessionToken : string) => {
+    const result = await auth.api.signOut({
+        headers: new Headers({
+            Authorization : `Bearer ${sessionToken}`
+        })
+    })
+
+    return result;
+}
+
+const verifyEmail = async(email: string, otp: string) => {
+    const result = await auth.api.verifyEmailOTP({
+        body: {
+            email,
+            otp,
+        }
+    })
+
+    if(result.status && !result.user.emailVerified){
+        await prisma.user.update({
+            where: {
+                email,
+            },
+            data: {
+                emailVerified: true,
+            }
+        })
+    }
+}
+
+const forgotPassword = async(email: string) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    })
+
+    if(!user){
+        throw new AppError(status.NOT_FOUND, "User not found")
+    }
+
+    if(!user.emailVerified) {
+        throw new AppError(status.BAD_REQUEST, "Email not verified")
+    }
+
+    if(user.isDeleted || user.status === UserStatus.DELETED) {
+        throw new AppError(status.NOT_FOUND, "User not found")
+    }
+
+    await auth.api.requestPasswordResetEmailOTP({
+        body: {
+            email
+        }
+    })
+}
+
+const resetPassword = async (email: string, otp: string, newPassword: string) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    })
+
+    if(!user){
+        throw new AppError(status.NOT_FOUND, "User not found")
+    }
+
+    if(!user.emailVerified) {
+        throw new AppError(status.BAD_REQUEST, "Email not verified")
+    }
+
+    if(user.isDeleted || user.status === UserStatus.DELETED) {
+        throw new AppError(status.NOT_FOUND, "User not found")
+    }
+
+    await auth.api.resetPasswordEmailOTP({
+        body: {
+            email,
+            otp,
+            password: newPassword
+        }
+    })
+
+    if(user.needPasswordChange){
+        await prisma.user.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                needPasswordChange: false
+            }
+        })
+    }
+
+    await prisma.session.deleteMany({
+        where: {
+            userId: user.id
+        }
+    })
+}
+
+const googleLoginSuccess = async() => {}
+
 export const authService = {
     registerPatient,
     loginUser,
     getMe,
-    getNewToken
+    getNewToken, 
+    changePassword,
+    logoutUser,
+    verifyEmail,
+    forgotPassword,
+    resetPassword,
+    googleLoginSuccess
 }
