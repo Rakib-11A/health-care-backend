@@ -136,27 +136,36 @@ export const auth = betterAuth({
             maxAge: 60 * 60 * 60 * 24
         }
     },
-    // trustedOrigins: [config.betterAuthUrl || "http://localhost:5000"],
-    // advanced: {
-    //     disableCSRFCheck: true,
-    // },
+    trustedOrigins: [
+        envVars.BETTER_AUTH_URL,
+        envVars.FRONTEND_URL,
+        "http://localhost:5000",
+        "http://localhost:3000"
+    ],
 
     advanced: {
-        // disableCSRFCheck: true,
-        useSecureCookies: false,
+        // Allow OAuth callback when redirected from Google (cross-site navigation).
+        // In production with HTTPS, you can set this to false and rely on SameSite=None; Secure.
+        disableCSRFCheck: !envVars.BETTER_AUTH_URL.startsWith("https://"),
+        useSecureCookies: envVars.BETTER_AUTH_URL.startsWith("https://"),
+        defaultCookieAttributes: {
+            sameSite: envVars.BETTER_AUTH_URL.startsWith("https://") ? "none" : "lax",
+            secure: envVars.BETTER_AUTH_URL.startsWith("https://"),
+            path: "/",
+        },
         cookies: {
             state: {
                 attributes: {
-                    sameSite: "none",
-                    secure: true,
+                    sameSite: envVars.BETTER_AUTH_URL.startsWith("https://") ? "none" : "lax",
+                    secure: envVars.BETTER_AUTH_URL.startsWith("https://"),
                     httpOnly: true,
                     path: "/",
                 }
             },
             sessionToken: {
                 attributes: {
-                    sameSite: "none",
-                    secure: true,
+                    sameSite: envVars.BETTER_AUTH_URL.startsWith("https://") ? "none" : "lax",
+                    secure: envVars.BETTER_AUTH_URL.startsWith("https://"),
                     httpOnly: true,
                     path: "/",
                 }
