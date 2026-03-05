@@ -12,7 +12,11 @@ router.get('/',
     doctorController.getAllDoctors
 );
 
-router.get('/:id', doctorController.getDoctorById);
+router.get(
+    '/:id',
+    checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
+    doctorController.getDoctorById
+);
 router.patch(
     '/:id',
     checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN),

@@ -396,6 +396,8 @@ export const ModelName = {
   MedicalReport: 'MedicalReport',
   Patient: 'Patient',
   PatientHealthData: 'PatientHealthData',
+  Payment: 'Payment',
+  Prescription: 'Prescription',
   Review: 'Review',
   Schedule: 'Schedule',
   Speciality: 'Speciality',
@@ -415,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "appoinment" | "user" | "session" | "account" | "verification" | "doctor" | "doctorSchedules" | "doctorSpaciality" | "medicalReport" | "patient" | "patientHealthData" | "review" | "schedule" | "speciality" | "superAdmin"
+    modelProps: "admin" | "appoinment" | "user" | "session" | "account" | "verification" | "doctor" | "doctorSchedules" | "doctorSpaciality" | "medicalReport" | "patient" | "patientHealthData" | "payment" | "prescription" | "review" | "schedule" | "speciality" | "superAdmin"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1307,6 +1309,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Payment: {
+      payload: Prisma.$PaymentPayload<ExtArgs>
+      fields: Prisma.PaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.PaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        findMany: {
+          args: Prisma.PaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        create: {
+          args: Prisma.PaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        createMany: {
+          args: Prisma.PaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.PaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        update: {
+          args: Prisma.PaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.PaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayment>
+        }
+        groupBy: {
+          args: Prisma.PaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    Prescription: {
+      payload: Prisma.$PrescriptionPayload<ExtArgs>
+      fields: Prisma.PrescriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PrescriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PrescriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.PrescriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PrescriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>
+        }
+        findMany: {
+          args: Prisma.PrescriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>[]
+        }
+        create: {
+          args: Prisma.PrescriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>
+        }
+        createMany: {
+          args: Prisma.PrescriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PrescriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.PrescriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>
+        }
+        update: {
+          args: Prisma.PrescriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PrescriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PrescriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PrescriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PrescriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrescriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.PrescriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePrescription>
+        }
+        groupBy: {
+          args: Prisma.PrescriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PrescriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PrescriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PrescriptionCountAggregateOutputType> | number
+        }
+      }
+    }
     Review: {
       payload: Prisma.$ReviewPayload<ExtArgs>
       fields: Prisma.ReviewFieldRefs
@@ -1644,7 +1794,6 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const AdminScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   name: 'name',
   email: 'email',
   profilePhoto: 'profilePhoto',
@@ -1652,7 +1801,8 @@ export const AdminScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
@@ -1660,15 +1810,14 @@ export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof Ad
 
 export const AppoinmentScalarFieldEnum = {
   id: 'id',
-  startDate: 'startDate',
-  patiendId: 'patiendId',
-  doctorId: 'doctorId',
-  doctorScheduleId: 'doctorScheduleId',
   videoCallingId: 'videoCallingId',
   status: 'status',
   paymentStatus: 'paymentStatus',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  patiendId: 'patiendId',
+  doctorId: 'doctorId',
+  scheduleId: 'scheduleId'
 } as const
 
 export type AppoinmentScalarFieldEnum = (typeof AppoinmentScalarFieldEnum)[keyof typeof AppoinmentScalarFieldEnum]
@@ -1763,12 +1912,11 @@ export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof 
 
 
 export const DoctorSchedulesScalarFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  scheduleId: 'scheduleId',
   isBooked: 'isBooked',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  doctorId: 'doctorId',
+  scheduleId: 'scheduleId'
 } as const
 
 export type DoctorSchedulesScalarFieldEnum = (typeof DoctorSchedulesScalarFieldEnum)[keyof typeof DoctorSchedulesScalarFieldEnum]
@@ -1787,14 +1935,12 @@ export type DoctorSpacialityScalarFieldEnum = (typeof DoctorSpacialityScalarFiel
 
 export const MedicalReportScalarFieldEnum = {
   id: 'id',
-  patientId: 'patientId',
-  doctorId: 'doctorId',
-  appoinmentId: 'appoinmentId',
-  diagnosis: 'diagnosis',
-  treatment: 'treatment',
-  followUpDate: 'followUpDate',
+  reportName: 'reportName',
+  reportLink: 'reportLink',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  patientId: 'patientId',
+  doctorId: 'doctorId'
 } as const
 
 export type MedicalReportScalarFieldEnum = (typeof MedicalReportScalarFieldEnum)[keyof typeof MedicalReportScalarFieldEnum]
@@ -1819,7 +1965,6 @@ export type PatientScalarFieldEnum = (typeof PatientScalarFieldEnum)[keyof typeo
 
 export const PatientHealthDataScalarFieldEnum = {
   id: 'id',
-  patientId: 'patientId',
   gender: 'gender',
   dateOfBirth: 'dateOfBirth',
   bloodGroup: 'bloodGroup',
@@ -1837,21 +1982,51 @@ export const PatientHealthDataScalarFieldEnum = {
   recentDepression: 'recentDepression',
   maritalStatus: 'maritalStatus',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  patientId: 'patientId'
 } as const
 
 export type PatientHealthDataScalarFieldEnum = (typeof PatientHealthDataScalarFieldEnum)[keyof typeof PatientHealthDataScalarFieldEnum]
 
 
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  transactionId: 'transactionId',
+  stripeEventid: 'stripeEventid',
+  status: 'status',
+  paymentGatewayData: 'paymentGatewayData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  appoinmentId: 'appoinmentId'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const PrescriptionScalarFieldEnum = {
+  id: 'id',
+  followUpDate: 'followUpDate',
+  instructions: 'instructions',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  appoinmentId: 'appoinmentId',
+  patientId: 'patientId',
+  doctorId: 'doctorId'
+} as const
+
+export type PrescriptionScalarFieldEnum = (typeof PrescriptionScalarFieldEnum)[keyof typeof PrescriptionScalarFieldEnum]
+
+
 export const ReviewScalarFieldEnum = {
   id: 'id',
-  patientId: 'patientId',
-  doctorId: 'doctorId',
-  appoinmentId: 'appoinmentId',
   rating: 'rating',
   comment: 'comment',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  appoinmentId: 'appoinmentId',
+  patientId: 'patientId',
+  doctorId: 'doctorId'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -1859,8 +2034,8 @@ export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof 
 
 export const ScheduleScalarFieldEnum = {
   id: 'id',
-  startData: 'startData',
-  endDate: 'endDate',
+  startDataTime: 'startDataTime',
+  endDateTime: 'endDateTime',
   startTime: 'startTime',
   endTime: 'endTime',
   createdAt: 'createdAt',
@@ -1908,6 +2083,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -1922,6 +2105,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2090,6 +2282,20 @@ export type EnumMaritalStausFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 export type ListEnumMaritalStausFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MaritalStaus[]'>
     
 
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -2197,6 +2403,8 @@ export type GlobalOmitConfig = {
   medicalReport?: Prisma.MedicalReportOmit
   patient?: Prisma.PatientOmit
   patientHealthData?: Prisma.PatientHealthDataOmit
+  payment?: Prisma.PaymentOmit
+  prescription?: Prisma.PrescriptionOmit
   review?: Prisma.ReviewOmit
   schedule?: Prisma.ScheduleOmit
   speciality?: Prisma.SpecialityOmit

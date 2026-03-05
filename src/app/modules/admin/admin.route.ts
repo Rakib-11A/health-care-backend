@@ -18,13 +18,13 @@ router.get('/:id',
 )
 
 router.patch('/:id',
-    checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
+    checkAuth(UserRole.SUPER_ADMIN),
     validateRequest(updateAdminValidationSchema),
     adminController.updateAdmin
 )
 
 router.delete('/:id',
-    checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
+    checkAuth(UserRole.SUPER_ADMIN),
     adminController.softDeleteAdmin
 )
 

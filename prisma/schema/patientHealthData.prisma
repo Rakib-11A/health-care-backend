@@ -1,6 +1,5 @@
 model PatientHealthData {
     id                  String       @id @default(uuid())
-    patientId           String       @unique
     gender              Gender
     dateOfBirth         DateTime
     bloodGroup          BloodGroup
@@ -21,7 +20,8 @@ model PatientHealthData {
     updatedAt           DateTime     @updatedAt
 
     // Relations
-    patient Patient @relation(fields: [patientId], references: [id])
+    patientId String  @unique
+    patient   Patient @relation(fields: [patientId], references: [id])
 
     @@map("patient_health_data")
 }
