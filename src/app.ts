@@ -27,6 +27,7 @@ app.use(cors({
 }));
 
 app.use('/api/auth', toNodeHandler(auth))
+
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({extended: true}));
 

@@ -6,8 +6,9 @@ import z from "zod";
 import status from "http-status";
 import { TErrorResponse, TErrorSources } from "../interfaces/error.interface";
 import { handleZodError } from "../errorHelpers/handleZodError";
+import { deleteFileFromCloudinary } from "../config/cloudinary.config";
 
-export const errorHandler = (
+export const errorHandler = async (
     err: any,
     req: Request,
     res: Response,
@@ -15,6 +16,15 @@ export const errorHandler = (
 ) => {
     if(envVars.NODE_ENV === 'development'){
         console.log("Error from Global Error Handler ", err)
+    }
+
+    if(req.file){
+        await deleteFileFromCloudinary(req.file?.path)
+    }
+
+    if(req.files && Array.isArray(req.files) && req.files.length > 0){
+        const imageUrls = req.files.map((file) => file.path);
+        await Promise.all(imageUrls.map(url => deleteFileFromCloudinary(url)));
     }
 
     let errorSources : TErrorSources[] = [];

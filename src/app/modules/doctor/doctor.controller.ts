@@ -3,9 +3,11 @@ import { asynchandler } from "../../utils/asyncHandler";
 import { doctorService } from "./doctor.service";
 import { sendResponse } from "../../utils/sendResponse";
 import status from "http-status";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const getAllDoctors = asynchandler( async(req: Request, res: Response) => {
-    const result = await doctorService.getAllDoctors();
+    const query = req.query;
+    const result = await doctorService.getAllDoctors(query as IQueryParams);
     sendResponse(res, {
         httpStatusCode: status.OK,
         success: true,

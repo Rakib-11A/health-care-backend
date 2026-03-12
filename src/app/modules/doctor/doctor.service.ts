@@ -3,22 +3,59 @@ import AppError from "../../errorHelpers/AppError"
 import { prisma } from "../../lib/prisma"
 import { IUpdataDoctorPayload } from "./doctor.interface"
 import { UserStatus } from "../../../generated/prisma/enums"
+import { QueryBuilder } from "../../utils/QueryBuilder"
+import { doctorFilterableFields, doctorIncludeConfig, doctorSearchableFields } from "./doctor.constant"
+import { Doctor, Prisma } from "../../../generated/prisma/client"
+import { IQueryParams } from "../../interfaces/query.interface"
 
-const getAllDoctors = async () => {
-  const doctors = await prisma.doctor.findMany({
-    where: {
-      isDeleted: false
-    },
-    include: {
-      user: true,
-      specialities: {
-        include: {
-          speciality: true
-        }
-      }
+const getAllDoctors = async (query : IQueryParams) => {
+  // const doctors = await prisma.doctor.findMany({
+  //   where: {
+  //     isDeleted: false
+  //   },
+  //   include: {
+  //     user: true,
+  //     specialities: {
+  //       include: {
+  //         speciality: true
+  //       }
+  //     }
+  //   }
+  // });
+  // return doctors;
+
+  const queryBuilder = new QueryBuilder<Doctor, Prisma.DoctorWhereInput, Prisma.DoctorInclude>(
+    prisma.doctor,
+    query,
+    {
+      searchableFields: doctorSearchableFields,
+      filterableFields: doctorFilterableFields,
     }
-  });
-  return doctors;
+  )
+
+  const result = await queryBuilder
+                      .search()
+                      .filter()
+                      .where({
+                        isDeleted: true
+                      })
+                      .include({
+                        user: true,
+                        // speciality: true,
+                        specialities: {
+                          include: {
+                            speciality: true
+                          }
+                        },
+                      })
+                      .dynamicInclude(doctorIncludeConfig)
+                      .paginate()
+                      .sort()
+                      .fields()
+                      .execute();
+
+                      console.log(result);
+    return result;
 }
 
 const getDoctorById = async (id : string) => {

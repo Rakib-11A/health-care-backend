@@ -3,10 +3,18 @@ import { specialityController } from "./speciality.controller";
 import { checkAuth } from "../../middlewares/checkAuth.middleware";
 import { UserRole } from "../../../generated/prisma/enums";
 import { Router } from "express";
+import { multerUpload } from "../../config/multer.config";
+import { validateRequest } from "../../middlewares/validateRequest.middleware";
+import { SpecialityValidation } from "./speciality.validation";
 
 const router = Router();
 
-router.post('/', checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN), specialityController.createSpeciality);
+router.post('/',
+    // checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
+    multerUpload.single("file"),
+    validateRequest(SpecialityValidation.createSpecialityZodSchema),
+    specialityController.createSpeciality
+);
 router.get('/',specialityController.getAllSpecialities);
 router.patch('/:id',checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN), specialityController.updateSpeciality);
 router.delete('/:id', checkAuth(UserRole.ADMIN, UserRole.SUPER_ADMIN), specialityController.deleteSpeciality);
