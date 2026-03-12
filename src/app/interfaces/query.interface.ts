@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface PrismaFindArgs {
+export interface PrismaFindManyArgs {
     where? : Record<string, unknown>;
     include? : Record<string, unknown>;
     select? : Record<string, boolean | Record<string, unknown> >;
@@ -30,7 +30,7 @@ export interface IQueryParams {
     searchTerm?: string;
     page?: string;
     limit?: string;
-    sortyBy?: string;
+    sortBy?: string;
     sortOrder?: 'asc' | 'desc';
     fields?: string;
     includes?: string;
@@ -73,4 +73,14 @@ export interface PrismaNumberFilter {
     gt ?: number;
     gte ?: number;
     not ?: PrismaNumberFilter | number;
+}
+
+export interface IQueryResult<T> {
+    data: T[];
+    meta: {
+        page : number;
+        limit : number;
+        total : number;
+        totalPages : number;
+    }
 }
