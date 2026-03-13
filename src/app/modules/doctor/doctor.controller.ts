@@ -12,7 +12,8 @@ const getAllDoctors = asynchandler( async(req: Request, res: Response) => {
         httpStatusCode: status.OK,
         success: true,
         message: 'All doctors fetched successfully.',
-        data: result
+        data: result.data,
+        meta: result.meta
     })
 })
 

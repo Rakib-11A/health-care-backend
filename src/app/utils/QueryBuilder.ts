@@ -139,6 +139,11 @@ export class QueryBuilder<
 
                     queryRelation[nestedField] = this.parseFilterValue(value);
                     countRelation[nestedField] = this.parseFilterValue(value);
+                    // after handling a two-part nested key we should exit early to
+                    // avoid falling through to the generic assignment below;
+                    // otherwise we end up with both `user: { role: ... }` and
+                    // `"user.role": ...` which Prisma rejects.
+                    return;
                 }else if(parts.length === 3){
                     const [relation, nestedRelation, nestedField] = parts;
 
@@ -216,20 +221,19 @@ export class QueryBuilder<
         return this;
     }
 
-    sort(): this {
-        
+    sort () : this {
         const sortBy = this.queryParams.sortBy || 'createdAt';
         const sortOrder = this.queryParams.sortOrder === 'asc' ? 'asc' : 'desc';
 
         this.sortBy = sortBy;
         this.sortOrder = sortOrder;
 
-        // /doctors?sortby=user.name&sortOrder=asc => orderBy: { user: { name: 'asc' }}
+        // /doctors?sortBy=user.name&sortOrder=asc => orderBy: { user: { name: 'asc' } }
 
         if(sortBy.includes(".")){
-            const parts = sortBy.split(".")
+            const parts = sortBy.split(".");
 
-            if(parts.length === 2) {
+            if(parts.length === 2){
                 const [relation, nestedField] = parts;
 
                 this.query.orderBy = {
@@ -237,7 +241,7 @@ export class QueryBuilder<
                         [nestedField] : sortOrder
                     }
                 }
-            } else if (parts.length === 3){
+            }else if(parts.length === 3){
                 const [relation, nestedRelation, nestedField] = parts;
 
                 this.query.orderBy = {
@@ -247,28 +251,31 @@ export class QueryBuilder<
                         }
                     }
                 }
-            } else {
+            }else{
                 this.query.orderBy = {
                     [sortBy] : sortOrder
                 }
             }
+        }else{
+            this.query.orderBy = {
+                [sortBy]: sortOrder
+            }
         }
-
         return this;
     }
 
-    fields(): this {
-        const fieldsParams = this.queryParams.fields;
-        // /doctors?fields=id,name,user => select: { id: true, name: true, user: { select: { name: true }}}
+    fields() : this {
+        const fieldsParam = this.queryParams.fields;
+        // /doctors?fields=id,name,user => select: { id: true, name: true, user: { select: { name: true } } }
 
-        // no nested field selection for now, only direct fields
-        if(fieldsParams && typeof fieldsParams === 'string'){
-            const filedsArray = fieldsParams?.split(",").map(field => field.trim());
+        //no nested field selection for now, only direct fields
+        if(fieldsParam && typeof fieldsParam === 'string'){
+            const fieldsArray = fieldsParam?.split(",").map(field => field.trim());
             this.selectFields = {};
 
-            filedsArray?.forEach((field) => {
-                if(this.selectFields){
-                    this.selectFields[field] = true
+            fieldsArray?.forEach((field) => {
+                if (this.selectFields) {
+                    this.selectFields[field] = true;
                 }
             })
 
@@ -276,7 +283,6 @@ export class QueryBuilder<
 
             delete this.query.include;
         }
-
         return this;
     }
 
